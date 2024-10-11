@@ -5,8 +5,9 @@
     <div v-else-if="blog">
       <h1>{{ blog.Title }}</h1>
       <img v-if="blog.Caption && blog.Caption.url" 
-           :src="getImageUrl(blog.Caption.url)" 
-           alt="Blog Caption" />
+          :src="getImageUrl(blog.Caption.url)" 
+          alt="Blog Caption" 
+          class="blog-image" /> 
       <div v-if="!blog.Is_Paid || isPaid">
         <div v-html="parseContent(blog.Content)"></div>
       </div>
@@ -96,3 +97,10 @@ onMounted(() => {
   fetchBlog()
 })
 </script>
+
+<style scoped>
+.blog-image {
+width: 500px;
+height: auto;
+}
+</style>
