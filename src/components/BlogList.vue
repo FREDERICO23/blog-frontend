@@ -4,12 +4,12 @@
     <div v-if="loading">Loading...</div>
     <div v-else-if="error">{{ error }}</div>
     <div v-else>
-      <div v-for="blog in blogs" :key="blog.id" class="blog-preview">
-        <h2>{{ blog.attributes.Title }}</h2>
-        <p v-if="blog.attributes.Content">
-          {{ getContentPreview(blog.attributes.Content) }}
+      <div v-for="blog in blogs" :key="blog.documentId" class="blog-preview">
+        <h2>{{ blog.Title }}</h2>
+        <p v-if="blog.Content">
+          {{ getContentPreview(blog.Content) }}
         </p>
-        <router-link :to="{ name: 'BlogDetail', params: { id: blog.id } }" class="read-more">
+        <router-link :to="{ name: 'BlogDetail', params: { id: blog.documentId } }" class="read-more">
           Read More
         </router-link>
       </div>

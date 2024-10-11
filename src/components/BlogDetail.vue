@@ -3,12 +3,12 @@
     <div v-if="loading">Loading...</div>
     <div v-else-if="error">{{ error }}</div>
     <div v-else-if="blog">
-      <h1>{{ blog.attributes.Title }}</h1>
-      <img v-if="blog.attributes.Caption && blog.attributes.Caption.data" 
-           :src="getImageUrl(blog.attributes.Caption.data)" 
+      <h1>{{ blog.Title }}</h1>
+      <img v-if="blog.Caption && blog.Caption.url" 
+           :src="getImageUrl(blog.Caption.url)" 
            alt="Blog Caption" />
-      <div v-if="!blog.attributes.Is_Paid || isPaid">
-        <div v-html="parseContent(blog.attributes.Content)"></div>
+      <div v-if="!blog.Is_Paid || isPaid">
+        <div v-html="parseContent(blog.Content)"></div>
       </div>
       <div v-else>
         <p>This is a paid article. Please pay to read the full content.</p>
@@ -60,7 +60,7 @@ const handlePaymentSuccess = async (response) => {
   // Here you would typically update the backend to record the payment
   try {
     await api.post('/payments', {
-      blogId: blog.value.id,
+      blogId: blog.value.documentId, // Use documentId for the blog
       paymentReference: response.reference,
       amount: response.amount,
     })
@@ -81,9 +81,9 @@ const parseContent = (content) => {
   return content
 }
 
-const getImageUrl = (imageData) => {
-  if (imageData && imageData.attributes && imageData.attributes.url) {
-    return `http://localhost:1337${imageData.attributes.url}`
+const getImageUrl = (imageUrl) => {
+  if (imageUrl) {
+    return `http://localhost:1337${imageUrl}`
   }
   return ''
 }
